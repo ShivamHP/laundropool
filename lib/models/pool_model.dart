@@ -4,7 +4,7 @@ class Pool {
   final String uid;
   final String creator;
   final String bio;
-  final List people;
+  final Map<String, int> participants;
   final int available_space;
   final int total_space;
   final String laundary_service;
@@ -17,12 +17,12 @@ class Pool {
       {required this.uid,
       required this.bio,
       required this.creator,
-      required this.people,
       required this.available_space,
       required this.total_space,
       required this.laundary_service,
       required this.day_of_month,
       required this.month,
+      required this.participants,
       required this.year,
       required this.price});
 
@@ -32,7 +32,6 @@ class Pool {
     return Pool(
       uid: snapshot["uid"],
       bio: snapshot["bio"],
-      people: snapshot["people"],
       creator: snapshot["creator"],
       available_space: snapshot["available_space"],
       total_space: snapshot["total_space"],
@@ -41,13 +40,13 @@ class Pool {
       month: snapshot["month"],
       year: snapshot["year"],
       price: snapshot["price"],
+      participants: snapshot["participants"]
     );
   }
 
   Map<String, dynamic> toJson() => {
         "uid": uid,
         "bio": bio,
-        "people": people,
         "creator": creator,
         "available_space": available_space,
         "total_space": total_space,
@@ -56,5 +55,6 @@ class Pool {
         "month": month,
         "year": year,
         "price": price,
+        "participants": participants
       };
 }

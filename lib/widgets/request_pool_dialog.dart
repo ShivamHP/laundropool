@@ -30,15 +30,16 @@ class _RequestPoolDialogState extends State<RequestPoolDialog> {
   var db = FirebaseFirestore.instance;
 
   addUserToPool(String uid, String poolId, int space_required) async {
-    List<dynamic> poolers = [];
     int available_space = 0;
+    int space_took_already = 0;
     await db.collection("pools").doc(poolId).get().then((value) => {
-          poolers = value["people"],
-          available_space = value["available_space"]
+          available_space = value["available_space"],
+          space_took_already = value["participants"][uid]?? 0
         });
-    poolers.add(uid);
+    await db.collection("pools").doc(poolId).set({
+      "participants" : {uid : (space_required + space_took_already)}
+    }, SetOptions(merge: true));
     await db.collection("pools").doc(poolId).update({
-      "people": poolers,
       "available_space": available_space - space_required,
     });
   }

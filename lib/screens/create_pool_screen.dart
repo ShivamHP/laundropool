@@ -21,9 +21,9 @@ class _CreatePoolScreenState extends State<CreatePoolScreen> {
   TextEditingController _availableSpaceController = TextEditingController();
   TextEditingController _priceController = TextEditingController();
   String _selectedService = "LAUNDROMAT";
-  int day = 14;
-  int month = 11;
-  int year = 2002;
+  int day = DateTime.now().day;
+  int month = DateTime.now().month;
+  int year = DateTime.now().year;
 
   @override
   void initState() {
@@ -49,7 +49,7 @@ class _CreatePoolScreenState extends State<CreatePoolScreen> {
 
   addPoolToFirebase(Pool pool) async {
     var ref = await db.collection("pools").add(pool.toJson());
-    await ref.update({"uid" : ref.id});
+    await ref.update({"uid": ref.id});
   }
 
   @override
@@ -211,6 +211,7 @@ class _CreatePoolScreenState extends State<CreatePoolScreen> {
                         child: Text("$day/$month/$year"),
                       ),
                       onTap: () => DatePicker.showDatePicker(context,
+                      minTime: DateTime.now(),
                           showTitleActions: true, onChanged: (date) {
                         setState(() {
                           day = date.day;
@@ -230,27 +231,41 @@ class _CreatePoolScreenState extends State<CreatePoolScreen> {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColors().primaryColorLightest,
         onPressed: () async {
-          await addPoolToFirebase(
-            Pool(
-              uid: "",
-              bio: _descriptionController.text,
-              creator: Provider.of<UserProvider>(context, listen: false)
-                  .getUser
-                  .username,
-              people: [
-                Provider.of<UserProvider>(context, listen: false).getUser.uid,
-              ],
-              available_space: int.parse(_availableSpaceController.text),
-              total_space: int.parse(_totalWeightController.text),
-              laundary_service: _selectedService,
-              day_of_month: day,
-              month: month,
-              year: year,
-              price: int.parse(_priceController.text),
-            ),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Congratulations! Pool created.")));
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: ((context) => HomeScreen())));
+          if (_descriptionController.text.isNotEmpty &&
+              _totalWeightController.text.isNotEmpty &&
+              _availableSpaceController.text.isNotEmpty &&
+              _priceController.text.isNotEmpty) {
+            await addPoolToFirebase(
+              Pool(
+                uid: "",
+                bio: _descriptionController.text,
+                creator: Provider.of<UserProvider>(context, listen: false)
+                    .getUser
+                    .username,
+                participants: {
+                  Provider.of<UserProvider>(context, listen: false)
+                          .getUser
+                          .uid
+                          .toString():
+                      (int.parse(_totalWeightController.text) -
+                          int.parse(_availableSpaceController.text)),
+                },
+                available_space: int.parse(_availableSpaceController.text),
+                total_space: int.parse(_totalWeightController.text),
+                laundary_service: _selectedService,
+                day_of_month: day,
+                month: month,
+                year: year,
+                price: int.parse(_priceController.text),
+              ),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text("Congratulations! Pool created.")));
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: ((context) => HomeScreen())));
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please fill all fields")));
+          }
         },
         label: const Text(
           "Create",
@@ -283,9 +298,9 @@ class _CreatePoolScreenState extends State<CreatePoolScreen> {
             value: _selectedService,
             items: <String>[
               "LAUNDROMAT",
-              "POWER LAUNDARY",
-              "TRUE COLORS",
-              "LAXMI"
+              // "POWER LAUNDARY",
+              // "TRUE COLORS",
+              // "LAXMI"
             ].map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,

@@ -16,8 +16,11 @@ class BottomDialogSheet extends StatefulWidget {
 }
 
 class _BottomDialogSheetState extends State<BottomDialogSheet> {
+
+
   @override
   Widget build(BuildContext context) {
+  List<String> _participants = widget.data["participants"].keys.toList();
     return Container(
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.465,
@@ -42,8 +45,7 @@ class _BottomDialogSheetState extends State<BottomDialogSheet> {
             const SizedBox(
               height: 12,
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.32,
+            Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
@@ -169,11 +171,11 @@ class _BottomDialogSheetState extends State<BottomDialogSheet> {
                     ),
                     SizedBox(
                       width: double.infinity,
-                      height: 100,
+                      height: 108,
                       child: StreamBuilder(
                         stream: FirebaseFirestore.instance
                             .collection('users')
-                            .where("uid", whereIn: widget.data["people"])
+                            .where("uid", whereIn:  _participants)
                             .snapshots(),
                         builder: (context,
                             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
@@ -221,6 +223,13 @@ class _BottomDialogSheetState extends State<BottomDialogSheet> {
                                                 .toString()
                                                 .substring(0, 10) +
                                             "..",
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      Text(
+                                        "${widget.data["participants"][snapshot.data!.docs[index]["uid"]]} KG",
                                         style: const TextStyle(
                                           fontSize: 12,
                                           color: Colors.black,

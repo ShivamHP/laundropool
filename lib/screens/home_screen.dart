@@ -53,263 +53,303 @@ class _HomeScreenState extends State<HomeScreen> {
         ? const Center(
             child: CircularProgressIndicator(),
           )
-        : Scaffold(
-            key: _key,
-            endDrawer: Drawer(
-              child: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                  colors: [AppColors().gradientStart, AppColors().gradientEnd],
-                  begin: Alignment.center,
-                  end: Alignment.bottomRight,
-                )),
-                child: Column(
+        : (!user.email.endsWith("@goa.bits-pilani.ac.in") &&
+                !user.email.contains("shivampachchigar14112@gmail.com"))
+            ? Scaffold(
+                body: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      height: 32,
+                    const Text(
+                      "This app can only be accessed by Google account provided by BITS Pilani, Goa campus. Please logout and sign up with BITS ID",
+                      maxLines: 3,
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    Row(
-                      children: [
-                        Expanded(child: Container()),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(
-                              Icons.close,
-                              color: Colors.white,
-                            )),
-                      ],
-                    ),
-                    ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(user.photoUrl),
-                        radius: 32,
-                      ),
-                      title: Text(
-                        user.username,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      subtitle: Text(
-                        "${user.hostel} ${user.roomNumber}",
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      trailing: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                          size: 20,
+                    SizedBox(height: 12),
+                    GestureDetector(
+                      onTap: () => logOut(),
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            color: AppColors().primaryColor,
+                            borderRadius: BorderRadius.circular(4)),
+                        child: const Text(
+                          "LOGOUT",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white),
                         ),
-                        padding: const EdgeInsets.all(2),
                       ),
                     ),
-                    const SizedBox(height: 32),
-                    ListTile(
-                      leading: const Icon(
-                        Icons.shopping_bag,
-                        color: Colors.white,
-                      ),
-                      title: const Text(
-                        "My open pools",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: ((context) => MyOpenPoolsScreen())));
-                      },
-                    ),
-                    // ListTile(
-                    //   leading: const Icon(
-                    //     Icons.timeline,
-                    //     color: Colors.white,
-                    //   ),
-                    //   title: const Text(
-                    //     "Past pools",
-                    //     style: TextStyle(color: Colors.white),
-                    //   ),
-                    //   onTap: () {},
-                    // ),
-                    // ListTile(
-                    //   leading: const Icon(
-                    //     Icons.notifications,
-                    //     color: Colors.white,
-                    //   ),
-                    //   title: const Text(
-                    //     "Notifications",
-                    //     style: TextStyle(color: Colors.white),
-                    //   ),
-                    //   onTap: () {},
-                    // ),
-                    ListTile(
-                      leading: const Icon(
-                        Icons.help,
-                        color: Colors.white,
-                      ),
-                      title: const Text(
-                        "Help",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => const HelpScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                    ListTile(
-                      leading: const Icon(
-                        Icons.info,
-                        color: Colors.white,
-                      ),
-                      title: const Text(
-                        "About",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => const AboutScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                    Expanded(
-                      child: Container(),
-                    ),
-                    ListTile(
-                      leading: const Icon(
-                        Icons.logout,
-                        color: Colors.white,
-                      ),
-                      title: const Text(
-                        "Logout",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onTap: () {
-                        logOut();
-                      },
-                    ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height:24),
+                    const Text("Sorry for inconvenience!")
                   ],
                 ),
-              ),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                children: [
-                  const SizedBox(height: 32),
-                  Flexible(
-                    flex: 1,
-                    child: Row(
+              )
+            : Scaffold(
+                key: _key,
+                endDrawer: Drawer(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                      colors: [
+                        AppColors().gradientStart,
+                        AppColors().gradientEnd
+                      ],
+                      begin: Alignment.center,
+                      end: Alignment.bottomRight,
+                    )),
+                    child: Column(
                       children: [
-                        Text(
-                          AppConstants().AppName,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 32),
+                        const SizedBox(
+                          height: 32,
                         ),
-                        Expanded(child: Container()),
-                        // IconButton(
-                        //   padding: const EdgeInsets.all(4),
-                        //   onPressed: () {},
-                        //   icon: const Icon(
-                        //     Icons.notifications,
-                        //   ),
-                        // ),
-                        // IconButton(
-                        //   padding: const EdgeInsets.all(4),
-                        //   onPressed: () {},
-                        //   icon: const Icon(
+                        Row(
+                          children: [
+                            Expanded(child: Container()),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: const Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                )),
+                          ],
+                        ),
+                        ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(user.photoUrl),
+                            radius: 32,
+                          ),
+                          title: Text(
+                            user.username,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          subtitle: Text(
+                            "${user.hostel} ${user.roomNumber}",
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          trailing: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            padding: const EdgeInsets.all(2),
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+                        ListTile(
+                          leading: const Icon(
+                            Icons.shopping_bag,
+                            color: Colors.white,
+                          ),
+                          title: const Text(
+                            "My open pools",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: ((context) => MyOpenPoolsScreen())));
+                          },
+                        ),
+                        // ListTile(
+                        //   leading: const Icon(
                         //     Icons.timeline,
+                        //     color: Colors.white,
                         //   ),
+                        //   title: const Text(
+                        //     "Past pools",
+                        //     style: TextStyle(color: Colors.white),
+                        //   ),
+                        //   onTap: () {},
                         // ),
-                        IconButton(
-                          padding: const EdgeInsets.all(4),
-                          onPressed: () {
-                            _key.currentState!.openEndDrawer();
+                        // ListTile(
+                        //   leading: const Icon(
+                        //     Icons.notifications,
+                        //     color: Colors.white,
+                        //   ),
+                        //   title: const Text(
+                        //     "Notifications",
+                        //     style: TextStyle(color: Colors.white),
+                        //   ),
+                        //   onTap: () {},
+                        // ),
+                        ListTile(
+                          leading: const Icon(
+                            Icons.help,
+                            color: Colors.white,
+                          ),
+                          title: const Text(
+                            "Help",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => const HelpScreen(),
+                              ),
+                            );
                           },
-                          icon: const Icon(Icons.menu),
                         ),
+                        ListTile(
+                          leading: const Icon(
+                            Icons.info,
+                            color: Colors.white,
+                          ),
+                          title: const Text(
+                            "About",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => const AboutScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                        ListTile(
+                          leading: const Icon(
+                            Icons.logout,
+                            color: Colors.white,
+                          ),
+                          title: const Text(
+                            "Logout",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onTap: () {
+                            logOut();
+                          },
+                        ),
+                        const SizedBox(height: 16),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 36),
-                  Flexible(
-                    child: Row(
-                      children: [
-                        Text(
-                          "Open pools",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                              color: AppColors().primaryColor),
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 32),
+                      Flexible(
+                        flex: 1,
+                        child: Row(
+                          children: [
+                            Text(
+                              AppConstants().AppName,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w700, fontSize: 32),
+                            ),
+                            Expanded(child: Container()),
+                            // IconButton(
+                            //   padding: const EdgeInsets.all(4),
+                            //   onPressed: () {},
+                            //   icon: const Icon(
+                            //     Icons.notifications,
+                            //   ),
+                            // ),
+                            // IconButton(
+                            //   padding: const EdgeInsets.all(4),
+                            //   onPressed: () {},
+                            //   icon: const Icon(
+                            //     Icons.timeline,
+                            //   ),
+                            // ),
+                            IconButton(
+                              padding: const EdgeInsets.all(4),
+                              onPressed: () {
+                                _key.currentState!.openEndDrawer();
+                              },
+                              icon: const Icon(Icons.menu),
+                            ),
+                          ],
                         ),
-                        Expanded(child: Container()),
-                        // IconButton(
-                        //   onPressed: () {},
-                        //   icon: const Icon(Icons.search),
-                        // ),
-                      ],
-                    ),
-                    flex: 1,
-                  ),
-                  const SizedBox(height: 12),
-                  Flexible(
-                    child: StreamBuilder(
-                      stream: FirebaseFirestore.instance
-                          .collection('pools')
-                          .snapshots(),
-                      builder: (context,
-                          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                              snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return ListView.builder(
-                          itemCount: snapshot.data!.docs.length,
-                          itemBuilder: (context, index) {
-                            return LaundaryCard(
-                                data: snapshot.data!.docs[index].data());
+                      ),
+                      const SizedBox(height: 36),
+                      Flexible(
+                        child: Row(
+                          children: [
+                            Text(
+                              "Open pools",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                  color: AppColors().primaryColor),
+                            ),
+                            Expanded(child: Container()),
+                            // IconButton(
+                            //   onPressed: () {},
+                            //   icon: const Icon(Icons.search),
+                            // ),
+                          ],
+                        ),
+                        flex: 1,
+                      ),
+                      const SizedBox(height: 12),
+                      Flexible(
+                        child: StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('pools')
+                              .snapshots(),
+                          builder: (context,
+                              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                  snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            return ListView.builder(
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (context, index) {
+                                return LaundaryCard(
+                                    data: snapshot.data!.docs[index].data());
+                              },
+                            );
                           },
-                        );
-                      },
-                    ),
-                    flex: 14,
-                  )
-                ],
-              ),
-            ),
-            resizeToAvoidBottomInset: false,
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => CreatePoolScreen(),
+                        ),
+                        flex: 14,
+                      )
+                    ],
                   ),
-                );
-              },
-              backgroundColor: Colors.white,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(12),
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Icon(
-                  Icons.add,
-                  color: AppColors().primaryColor,
-                  size: 32,
+                resizeToAvoidBottomInset: false,
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => CreatePoolScreen(),
+                      ),
+                    );
+                  },
+                  backgroundColor: Colors.white,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Icon(
+                      Icons.add,
+                      color: AppColors().primaryColor,
+                      size: 32,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          );
+              );
   }
 }

@@ -13,6 +13,7 @@ import 'package:laundropool/models/user_model.dart' as model;
 import 'package:http/http.dart' as http;
 
 import '../resources/auth_methods.dart';
+import '../widgets/user_laundary_card.dart';
 import 'about_screen.dart';
 
 class MyOpenPoolsScreen extends StatefulWidget {
@@ -88,7 +89,7 @@ class _MyOpenPoolsScreenState extends State<MyOpenPoolsScreen> {
                     child: StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection('pools')
-                          .where('people', arrayContains: user.uid)
+                          .where('creator', isEqualTo: user.username)
                           .snapshots(),
                       builder: (context,
                           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
@@ -102,7 +103,7 @@ class _MyOpenPoolsScreenState extends State<MyOpenPoolsScreen> {
                         return ListView.builder(
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
-                            return LaundaryCard(
+                            return UserLaundaryCard(
                                 data: snapshot.data!.docs[index].data());
                           },
                         );
@@ -114,29 +115,7 @@ class _MyOpenPoolsScreenState extends State<MyOpenPoolsScreen> {
               ),
             ),
             resizeToAvoidBottomInset: false,
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => CreatePoolScreen(),
-                  ),
-                );
-              },
-              backgroundColor: Colors.white,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(12),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Icon(
-                  Icons.add,
-                  color: AppColors().primaryColor,
-                  size: 32,
-                ),
-              ),
-            ),
+            
           );
   }
 }
