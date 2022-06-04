@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:laundropool/screens/home_screen.dart';
@@ -28,9 +29,18 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
-  void signupWithGoogle(BuildContext context) async {
-    var user = await AuthMethods.signInWithGoogle(context: context);
-    if(user != null){
+  void addDataToFirebase(BuildContext context) async {
+    if (_phoneController.text.length != 10 &&
+        _roomNoController.text.length != 3) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter correct phone number and room numer."),
+        ),
+      );
+      return;
+    }
+    var user = await FirebaseAuth.instance.currentUser;
+    if (user != null) {
       String res = await AuthMethods().addUserToFirebase(
           _selectedHostel,
           _roomNoController.text.toString(),
@@ -41,9 +51,10 @@ class _SignupScreenState extends State<SignupScreen> {
           user.photoURL.toString());
       if (res == "success") {
         SnackBar snackBar = const SnackBar(
-          content: Text("You have been added successfully to the user base!"),
+          content: Text("Created account successfully!"),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Navigator.of(context).popUntil((route) => route.isFirst);
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (_) => const HomeScreen()));
       } else {
@@ -176,29 +187,6 @@ class _SignupScreenState extends State<SignupScreen> {
           const SizedBox(
             height: 24,
           ),
-          Row(
-            children: [
-              const Text(
-                "Already have an account?",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-              const SizedBox(
-                width: 4,
-              ),
-              GestureDetector(
-                  child: const Text(
-                    "Login",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w700),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
-                  }),
-            ],
-          ),
           Flexible(
             child: Container(),
             flex: 3,
@@ -260,28 +248,32 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(height: 32),
             ElevatedButton(
               onPressed: () {
-                if(_roomNoController.text == "" || _roomNoController.text == ""){
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please fill all fields"),),);
-                }
-                else{
-                signupWithGoogle(context);
+                if (_roomNoController.text == "" ||
+                    _roomNoController.text == "") {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Please fill all fields"),
+                    ),
+                  );
+                } else {
+                  addDataToFirebase(context);
                 }
               },
-              child: ListTile(
-                leading: SvgPicture.asset("assets/images/google_icon.svg"),
-                title: const Center(
+              child: const ListTile(
+                title: Center(
                   child: Text(
-                    "Sign up with Google",
+                    "CONTINUE",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
+                      color: Colors.white,
                     ),
                   ),
                 ),
               ),
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateProperty.resolveWith((states) => Colors.white),
+                    MaterialStateProperty.resolveWith((states) => AppColors().primaryColor),
                 shape: MaterialStateProperty.resolveWith<OutlinedBorder>((_) {
                   return const StadiumBorder();
                 }),

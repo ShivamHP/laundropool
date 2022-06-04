@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../values/colors.dart';
 import '../values/constants.dart';
@@ -61,9 +62,10 @@ class AboutScreen extends StatelessWidget {
                   Text(
                     "About developer",
                     style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 20,
-                        color: AppColors().primaryColor),
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                      color: AppColors().primaryColor,
+                    ),
                   ),
                   Expanded(child: Container()),
                 ],
@@ -112,18 +114,149 @@ class AboutScreen extends StatelessWidget {
               ),
               flex: 7,
             ),
-            Expanded(
-              child: Container(),
-              flex: 2,
+            const SizedBox(height: 36),
+            Row(
+              children: [
+                Text(
+                  "My social media handles: ",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                      color: AppColors().primaryColor),
+                ),
+                Expanded(child: Container()),
+              ],
             ),
-            Text(
-              "Thank you for using this app!",
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                GestureDetector(
+                  onTap: () => launch(
+                      "https://www.linkedin.com/in/shivam-pachchigar-675320229/"),
+                  child: Container(
+                    width: 110,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: const Color(0xff0A66C2),
+                        boxShadow: const [
+                          BoxShadow(
+                              offset: Offset(2, 2),
+                              blurRadius: 5,
+                              color: Color(0xffc4c4c4))
+                        ]),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Image.asset(
+                            "assets/images/linkedin.png",
+                            width: 24,
+                            height: 24,
+                          ),
+                          const Text(
+                            "LinkedIn",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                            ),
+                          )
+                        ]),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => launch("https://github.com/ShivamHP"),
+                  child: Container(
+                    width: 110,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: const Color(0xff000000),
+                        boxShadow: const [
+                          BoxShadow(
+                              offset: Offset(2, 2),
+                              blurRadius: 5,
+                              color: Color(0xffc4c4c4))
+                        ]),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Image.asset(
+                            "assets/images/github.png",
+                            width: 32,
+                            height: 32,
+                            color: Colors.white,
+                          ),
+                          const Text(
+                            "Github",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                            ),
+                          )
+                        ]),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () =>
+                      launch("https://www.instagram.com/shpachchigar/"),
+                  child: Container(
+                    width: 120,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: const Color(0xffffffff),
+                        boxShadow: const [
+                          BoxShadow(
+                              offset: Offset(2, 2),
+                              blurRadius: 5,
+                              color: Color(0xffc4c4c4))
+                        ]),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Image.asset(
+                            "assets/images/instagram.png",
+                            width: 24,
+                            height: 24,
+                          ),
+                          const Text(
+                            "Instagram",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18,
+                            ),
+                          )
+                        ]),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 36),
+            Row(
+              children: [
+                Text(
+                  "Special thanks to: ",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                      color: AppColors().primaryColor),
+                ),
+                Expanded(child: Container()),
+              ],
+            ),
+            const SizedBox(height: 4),
+            const Text(
+              "Arnav Borkar for designing part of the UI; \nYuvraj Singh Bhadauria for being a great mentor; \nShrish Dwivedi and GDSC BITS Goa for getting this app to Play store; \nAnd all the beta testers who took their time to find bugs in the app!",
               style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: AppColors().primaryColorLightest,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
               ),
-            ),
+              softWrap: true,
+            )
           ],
         ),
       ),

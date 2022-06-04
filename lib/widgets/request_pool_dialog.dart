@@ -65,7 +65,7 @@ class _RequestPoolDialogState extends State<RequestPoolDialog> {
         ),
       ),
       title: const Text(
-        "Request pool",
+        "Join pool",
         style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
       ),
       content: SizedBox(
@@ -130,7 +130,7 @@ class _RequestPoolDialogState extends State<RequestPoolDialog> {
                                   ),
                                 ],
                               ),
-                        const SizedBox(height: 32),
+                        const SizedBox(height: 6),
                         widget.data["available_space"] != 0
                             ? Text(
                                 "₹ ${_price.ceil().toInt()}",
@@ -153,7 +153,7 @@ class _RequestPoolDialogState extends State<RequestPoolDialog> {
                               : () async {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content: Text("Completed request!"),
+                                      content: Text("Joined pool!"),
                                     ),
                                   );
                                   _confettiController.play();
@@ -183,7 +183,7 @@ class _RequestPoolDialogState extends State<RequestPoolDialog> {
                               ),
                               child: const Center(
                                 child: Text(
-                                  "REQUEST",
+                                  "JOIN",
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,

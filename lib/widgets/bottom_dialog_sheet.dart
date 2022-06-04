@@ -275,7 +275,7 @@ class _BottomDialogSheetState extends State<BottomDialogSheet> {
                         width: 12,
                       ),
                       Text(
-                        "REQUEST TO POOL",
+                        "JOIN POOL",
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,

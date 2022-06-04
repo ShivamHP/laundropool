@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:laundropool/resources/auth_methods.dart';
@@ -8,18 +9,39 @@ import 'package:laundropool/values/colors.dart';
 
 void loginWithGoogle(BuildContext context) async {
   var user = await AuthMethods.signInWithGoogle(context: context);
-  if (user != null) {
-    String _name = user.displayName.toString();
-    SnackBar snackBar = SnackBar(
-      content: Text("Hi $_name"),
+  if(!user!.email!.endsWith("@goa.bits-pilani.ac.in") && user.email != "shivampachchigar14112@gmail.com"){
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Please sign in using BITS ID"),
+      ),
     );
-
-// Find the ScaffoldMessenger in the widget tree
-// and use it to show a SnackBar.
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (_) => const HomeScreen()));
+    await AuthMethods.signOut(context: context);
+    return;
+  }
+  if (user != null) {
+    var collectionRef = FirebaseFirestore.instance.collection("users");
+    collectionRef.doc(user.uid).get().then(
+          (docSnapshot) => {
+            if (docSnapshot.exists)
+              {
+                Navigator.of(context).popUntil((route) => route.isFirst),
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => const HomeScreen())),
+              }
+            else
+              {
+                Navigator.of(context).popUntil((route) => route.isFirst),
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => const SignupScreen())),
+              }
+          },
+        );
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Some error occured. Try again later!"),
+      ),
+    );
   }
 }
 
@@ -90,7 +112,7 @@ Widget info(BuildContext context) {
           flex: 2,
         ),
         const Text(
-          "Welcome back!",
+          "Welcome!",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.w700, fontSize: 32),
         ),
@@ -98,7 +120,7 @@ Widget info(BuildContext context) {
           height: 16,
         ),
         const Text(
-          "Yay! You're back!\nThanks for using this app.",
+          "Yay!\nThanks for using this app.",
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.w400, fontSize: 16),
         ),
@@ -167,29 +189,29 @@ Widget loginFunctionality(BuildContext context) {
         const SizedBox(
           height: 24,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Don't have an account?",
-              style: TextStyle(
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(
-              width: 4,
-            ),
-            GestureDetector(
-                child: Text(
-                  "Sign up",
-                  style: TextStyle(color: AppColors().primaryColor),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SignupScreen()));
-                }),
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     const Text(
+        //       "Don't have an account?",
+        //       style: TextStyle(
+        //         color: Colors.black87,
+        //       ),
+        //     ),
+        //     const SizedBox(
+        //       width: 4,
+        //     ),
+        //     GestureDetector(
+        //         child: Text(
+        //           "Sign up",
+        //           style: TextStyle(color: AppColors().primaryColor),
+        //         ),
+        //         onTap: () {
+        //           Navigator.of(context).push(
+        //               MaterialPageRoute(builder: (context) => SignupScreen()));
+        //         }),
+        //   ],
+        // ),
         const SizedBox(
           height: 16,
         )

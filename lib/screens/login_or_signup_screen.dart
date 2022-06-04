@@ -98,7 +98,7 @@ Widget contents(BuildContext context) {
         ),
         textAlign: TextAlign.center,
       ),
-      const SizedBox(height: 20),
+      const SizedBox(height: 40),
       TextButton(
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoginScreen()));
@@ -123,50 +123,50 @@ Widget contents(BuildContext context) {
           }),
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 100),
-        child: Row(children: const  <Widget>[
-          Expanded(child: Divider()),
-          SizedBox(width: 8,),
-          Text(
-          "OR",
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.black,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 0.001,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(width: 8,),
-        Expanded(child: Divider()),
-        ]),
-      ),
-      const SizedBox(height: 10),
-      TextButton(
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SignupScreen()));
-        },
-        child: const Text(
-          "REGISTER",
-          style: TextStyle(
-            fontSize: 14.0,
-            color: Colors.white,
-          ),
-        ),
-        style: ButtonStyle(
-          padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry>(
-              (states) =>
-                  const EdgeInsets.symmetric(horizontal: 48, vertical: 4)),
-          backgroundColor: MaterialStateProperty.resolveWith<Color>(
-              (states) => AppColors().primaryColor),
-          // side: MaterialStateProperty.resolveWith<BorderSide>(
-          //     (states) => const BorderSide(color: Colors.black)),
-          shape: MaterialStateProperty.resolveWith<OutlinedBorder>((_) {
-            return const StadiumBorder();
-          }),
-        ),
-      ),
+      // Padding(
+      //   padding: const EdgeInsets.symmetric(horizontal: 100),
+      //   child: Row(children: const  <Widget>[
+      //     Expanded(child: Divider()),
+      //     SizedBox(width: 8,),
+      //     Text(
+      //     "OR",
+      //     style: TextStyle(
+      //       fontSize: 14,
+      //       color: Colors.black,
+      //       fontWeight: FontWeight.w700,
+      //       letterSpacing: 0.001,
+      //     ),
+      //     textAlign: TextAlign.center,
+      //   ),
+      //   SizedBox(width: 8,),
+      //   Expanded(child: Divider()),
+      //   ]),
+      // ),
+      // const SizedBox(height: 10),
+      // TextButton(
+      //   onPressed: () {
+      //     Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SignupScreen()));
+      //   },
+      //   child: const Text(
+      //     "REGISTER",
+      //     style: TextStyle(
+      //       fontSize: 14.0,
+      //       color: Colors.white,
+      //     ),
+      //   ),
+      //   style: ButtonStyle(
+      //     padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry>(
+      //         (states) =>
+      //             const EdgeInsets.symmetric(horizontal: 48, vertical: 4)),
+      //     backgroundColor: MaterialStateProperty.resolveWith<Color>(
+      //         (states) => AppColors().primaryColor),
+      //     // side: MaterialStateProperty.resolveWith<BorderSide>(
+      //     //     (states) => const BorderSide(color: Colors.black)),
+      //     shape: MaterialStateProperty.resolveWith<OutlinedBorder>((_) {
+      //       return const StadiumBorder();
+      //     }),
+      //   ),
+      // ),
     ],
   );
 }

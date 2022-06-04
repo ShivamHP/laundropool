@@ -234,7 +234,8 @@ class _CreatePoolScreenState extends State<CreatePoolScreen> {
           if (_descriptionController.text.isNotEmpty &&
               _totalWeightController.text.isNotEmpty &&
               _availableSpaceController.text.isNotEmpty &&
-              _priceController.text.isNotEmpty) {
+              _priceController.text.isNotEmpty &&
+              (int.parse( _totalWeightController.text) > int.parse(_availableSpaceController.text))) {
             await addPoolToFirebase(
               Pool(
                 uid: "",
@@ -262,9 +263,9 @@ class _CreatePoolScreenState extends State<CreatePoolScreen> {
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text("Congratulations! Pool created.")));
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: ((context) => HomeScreen())));
+                MaterialPageRoute(builder: ((context) => const HomeScreen())));
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please fill all fields")));
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please fill all fields appropriately")));
           }
         },
         label: const Text(

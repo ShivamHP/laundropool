@@ -43,8 +43,8 @@ class AuthMethods {
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
-
-      try {
+      
+        try {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
 
@@ -58,6 +58,7 @@ class AuthMethods {
       } catch (e) {
         // handle the error here
       }
+      
     }
 
     return user;
