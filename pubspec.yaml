@@ -43,6 +43,7 @@ dependencies:
   google_sign_in: ^5.2.4
   http: ^0.13.4
   image_picker: ^0.8.5
+  in_app_update: ^3.0.0
   lottie: ^1.2.2
   provider: ^6.0.2
   url_launcher: ^6.0.20

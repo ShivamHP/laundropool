@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:laundropool/providers/user_provider.dart';
 import 'package:laundropool/screens/home_screen.dart';
 import 'package:laundropool/screens/onboarding_screen.dart';
@@ -46,10 +48,24 @@ class _MyAppState extends State<MyApp> {
 
   Map _source = {ConnectivityResult.none: false};
   final MyConnectivity _connectivity = MyConnectivity.instance;
+  late AppUpdateInfo _updateInfo;
+
+  getAppUpdateInfo() async {
+    var temp = await InAppUpdate.checkForUpdate();
+    log(temp.toString());
+    setState((){
+      _updateInfo = temp;
+    });
+  }
+
+  performImmediateUpdate() async {
+    InAppUpdate.performImmediateUpdate();
+  }
 
   @override
   void initState() {
     super.initState();
+    getAppUpdateInfo();
     _connectivity.initialise();
     _connectivity.myStream.listen((source) {
       setState(() => _source = source);
@@ -58,6 +74,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    if(_updateInfo.updatePriority > 0){
+
+    }
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     return MultiProvider(
