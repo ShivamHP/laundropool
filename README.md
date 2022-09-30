@@ -1,16 +1,40 @@
-# laundropool
+# Laundropool
 
-A new Flutter project.
+An app that can be used to share laundary with others to save money spent on laundary.  
 
-## Getting Started
+Made under Flutter Festival - BITS Goa Chapter  
 
-This project is a starting point for a Flutter application.
+Get the app on Google Play: https://play.google.com/store/apps/details?id=com.shivam.laundropool  
 
-A few resources to get you started if this is your first Flutter project:
+Screenshots:  
+<img src="https://user-images.githubusercontent.com/45695285/193303736-b70f71b8-e911-4675-be23-205646a02c00.png" width="200">
+<img src="https://user-images.githubusercontent.com/45695285/193303794-4a58870e-29d5-4e54-9942-bec246d2d359.png" width="200">
+<img src="https://user-images.githubusercontent.com/45695285/193304577-d8286c0f-c36c-4a41-9912-81b7b1924ced.png" width="200">
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## TechStack  
+
+The app is made using Flutter SDK. It relies on Firebase as it's backend.
+
+## Contributor guidelines:  
+
+This app was initially made only for students of BITS Goa. You can modify this app and use it for your own organisation.  
+We are open to have anyone contribute to the app.  
+
+## Steps to get started:  
+
+1. Make sure you have Flutter SDK along with Android SDK (for Android) and Xcode (for iOS).  
+
+2. Clone the repo:  
+```
+git clone https://github.com/ShivamHP/laundropool.git
+cd laundropool
+```
+  
+3. Create a new app on Firebase, provide necessary permissions, and export google-services.json to the required folder.  
+
+4. Run the app.
+```
+flutter run
+```
